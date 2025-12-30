@@ -1,0 +1,15 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- สมมติ TextBox GUI อยู่ใน PlayerGui
+local textBox = player.PlayerGui.ScreenGui.TextBox
+
+textBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        local speed = tonumber(textBox.Text)
+        if speed and speed > 0 then
+            humanoid.WalkSpeed = speed
+        end
+    end
+end)
