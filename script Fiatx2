@@ -1,0 +1,79 @@
+loadstring([[
+local p=game.Players.LocalPlayer
+local c=p.Character or p.CharacterAdded:Wait()
+local h=c:WaitForChild("Humanoid")
+local r=c:WaitForChild("HumanoidRootPart")
+h.WalkSpeed=200
+h.JumpPower=20
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+	h:ChangeState(3)
+	r.CFrame=r.CFrame*CFrame.Angles(0,0,math.rad(360))
+end)
+
+-- สร้าง ScreenGui
+local g=Instance.new("ScreenGui",p:WaitForChild("PlayerGui"))
+
+-- ปุ่ม toggle = รูปช่อง YouTube ของคุณ
+local toggleBtn=Instance.new("ImageButton",g)
+toggleBtn.Size=UDim2.new(0,80,0,80)
+toggleBtn.Position=UDim2.new(0,10,0,10)
+toggleBtn.Image="rbxassetid://YOUR_CHANNEL_ASSET_ID" -- <-- ใส่ Asset ID รูปช่องคุณ
+toggleBtn.BackgroundTransparency=0
+toggleBtn.BackgroundColor3=Color3.fromRGB(40,40,40)
+local btnCorner=Instance.new("UICorner",toggleBtn)
+btnCorner.CornerRadius=UDim.new(0,12)
+
+-- Frame เมนู
+local f=Instance.new("Frame",g)
+f.Size=UDim2.new(0,260,0,200)
+f.Position=UDim2.new(0,100,0,10)
+f.BackgroundColor3=Color3.fromRGB(40,40,40)
+f.BorderSizePixel=0
+local ts=Instance.new("UICorner",f)
+ts.CornerRadius=UDim.new(0,12)
+f.Visible=false
+
+-- รูปการ์ตูนผู้ชาย (The Flash)
+local img=Instance.new("ImageLabel",f)
+img.Size=UDim2.new(0,80,0,80)
+img.Position=UDim2.new(0,10,0,10)
+img.Image="rbxassetid://FLASH_ASSET_ID" -- <-- ใส่ Asset ID รูป The Flash
+img.BackgroundTransparency=1
+
+-- TextBox WalkSpeed
+local w=Instance.new("TextBox",f)
+w.Size=UDim2.new(0,150,0,30)
+w.Position=UDim2.new(0,100,0,10)
+w.Text="200"
+w.PlaceholderText="WalkSpeed"
+
+-- TextBox JumpPower
+local jw=Instance.new("TextBox",f)
+jw.Size=UDim2.new(0,150,0,30)
+jw.Position=UDim2.new(0,100,0,50)
+jw.Text="20"
+jw.PlaceholderText="JumpPower"
+
+-- ปุ่ม Apply
+local b=Instance.new("TextButton",f)
+b.Size=UDim2.new(0,240,0,40)
+b.Position=UDim2.new(0,10,0,150)
+b.Text="Apply"
+b.BackgroundColor3=Color3.fromRGB(70,130,180)
+b.TextColor3=Color3.fromRGB(255,255,255)
+b.Font=Enum.Font.SourceSansBold
+b.TextSize=20
+local bc=Instance.new("UICorner",b)
+bc.CornerRadius=UDim.new(0,8)
+
+b.MouseButton1Click:Connect(function()
+	h.WalkSpeed=tonumber(w.Text) or 200
+	h.JumpPower=tonumber(jw.Text) or 20
+end)
+
+-- Toggle ฟังก์ชัน
+toggleBtn.MouseButton1Click:Connect(function()
+	f.Visible = not f.Visible
+end)
+]])()
